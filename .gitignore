@@ -58,3 +58,4 @@ docs/_build/
 #Project specific
 include/
 staticfiles/
+settings/common.py
