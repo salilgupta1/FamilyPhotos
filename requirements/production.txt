@@ -1,0 +1,6 @@
+-r common.txt
+dj-static==0.0.5
+dj-database-url==0.3.0
+gunicorn==18.0
+raven>=3
+django-lockdown==1.0

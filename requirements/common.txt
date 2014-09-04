@@ -1,0 +1,7 @@
+Django==1.6.4
+Pillow==2.4.0
+wsgiref==0.1.2
+South==0.8.4
+psycopg2==2.5.1
+django-localflavor==1.0
+fabric==1.8.3
