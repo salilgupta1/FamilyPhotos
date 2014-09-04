@@ -24,7 +24,6 @@ INSTALLED_APPS = INSTALLED_APPS + (
     'lockdown',
 )
 
-STATIC_ROOT ='staticfiles'
 
 MIDDLEWARE_CLASSES += ('lockdown.middleware.LockdownMiddleware', )
 LOCKDOWN_PASSWORDS = (os.environ['STAGE_PASSWORD'],)
