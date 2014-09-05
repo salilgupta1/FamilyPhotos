@@ -9,4 +9,7 @@ urlpatterns = patterns('',
     # url(r'^blog/', include('blog.urls')),
 
     url(r'^admin/', include(admin.site.urls)),
+
+    #Albums
+    url(r'$',include('FamilyPhotos.apps.Albums.urls', namespace='Albums')),
 )
