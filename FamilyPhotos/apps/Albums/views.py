@@ -10,8 +10,9 @@ def home(request):
 	return render(request,"Albums/index.html")
 
 def createAlbum(request):
-	if request.method == "POST":
-		form = CreateAlbumForm(request.POST, request.FILES)
+	if request.method=="POST":
+		pass
+		#form = CreateAlbumForm(request.POST,request.FILES)
 	else:
 		form = CreateAlbumForm()
 	return render(request,"Albums/createAlbum.html",{"form":form})
