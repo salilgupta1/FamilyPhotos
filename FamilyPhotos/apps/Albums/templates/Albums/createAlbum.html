@@ -1,0 +1,22 @@
+{%extends 'Albums/base.html' %}
+{%load staticfiles%}
+{%block scripts%}
+	<script src = "{%static "Albums/js/FileManager.js"%}"></script>
+	<script>
+		$(document).ready(function(){
+			FileManager.init();
+		});
+	</script>
+{%endblock%}
+{%block content%}
+	<form role='form' enctype="multipart/form-data" method='POST' action="{%url 'Albums:createAlbum' %}">
+		{% csrf_token %}
+		{% for field in form%}
+		<div class = 'form-group'>
+			<div>{{field.errors|striptags}}</div>
+    		{{field.label_tag}}
+    		{{field}}
+    	</div>
+		{%endfor%}
+	</form>
+{%endblock%}

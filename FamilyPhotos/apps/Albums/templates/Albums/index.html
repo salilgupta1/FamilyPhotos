@@ -1,4 +1,13 @@
 {%extends 'Albums/base.html'%}
 {%block content%}
-	<center><div>Some Buttons</div></center>
+	<center>
+		<div>
+			<button>
+				<a href="{%url 'Albums:createAlbum' %}">Create Album</a>
+			</button>
+			<button>
+				View Albums
+			</button>
+		</div>
+	</center>
 {%endblock%}
