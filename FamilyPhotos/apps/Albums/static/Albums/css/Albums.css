@@ -1,0 +1,11 @@
+#imagePreview{
+	height:100%;
+}
+
+.photo {
+  position: relative;
+  float: left;
+  width: 150px;
+  margin: 5px;
+  padding: 10px;
+}

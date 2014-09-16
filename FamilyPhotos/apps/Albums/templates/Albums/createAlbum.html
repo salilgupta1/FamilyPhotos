@@ -1,27 +1,40 @@
 {%extends 'Albums/base.html' %}
 {%load staticfiles%}
+{%block cssFiles%}
+<link rel='stylesheet' type='text/css' href ="{%static "Albums/css/Albums.css"%}"/>
+{%endblock%}
 {%block scripts%}
+	<script src="{%static "js/isotope.pkgd.min.js"%}"></script>
+	<script src="{%static "js/cells-by-row.js"%}"></script>
+	<script src="{%static "js/imagesloaded.pkgd.min.js"%}"></script>
 	<script src = "{%static "Albums/js/FileManager.js"%}"></script>
 	<script>
 		$(document).ready(function(){
+			$("#createAlbum").hide();
 			FileManager.init();
 		});
 	</script>
 {%endblock%}
 {%block content%}
-	<form role='form' enctype="multipart/form-data" method='POST' action="{%url 'Albums:createAlbum' %}">
-		{% csrf_token %}
-		{% for field in form%}
-		<div class = 'form-group'>
-			<div>{{field.errors|striptags}}</div>
-    		{{field.label_tag}}
-    		{{field}}
-    	</div>
-		{%endfor%}
-		<button type = 'submit' class = 'btn btn-primary'>Create Album</button>
-	</form>
-	<div class='imagePreview'>
+	<div class='row col-md-10'>
+	{% if Success %}
+	<p>Success</p>
+	{%else%}
+		<form role='form' enctype="multipart/form-data" method='POST' action="{%url 'Albums:createAlbum' %}">
+			{% csrf_token %}
+			{% for field in form%}
+			<div class = 'form-group'>
+				<div>{{field.errors|striptags}}</div>
+	    		{{field.label_tag}}
+	    		{{field}}
+	    	</div>
+			{%endfor%}
+			<button type = 'submit' class = 'btn btn-primary' id='createAlbum'>Create Album</button>
+		</form>
+	</div>
+	<div id='imagePreview' class='row col-md-12'>
 
 	</div>
 
+{%endif%}
 {%endblock%}
