@@ -2,9 +2,9 @@ from django import forms
 from models import Album
 
 class CreateAlbumForm(forms.ModelForm):
-	title = forms.CharField(error_messages={'required':'You need a title'})
-	description = forms.CharField()
-	photos = forms.FileField()
+	title = forms.CharField(error_messages={'required':'You need a title'}, widget=forms.TextInput(attrs={'class':'col-md-6'}))
+	description = forms.CharField(widget=forms.Textarea(attrs={'class':'col-md-8'}))
+	photos = forms.FileField(widget=forms.ClearableFileInput(attrs={'class':'col-md-4'}))
 
 	class Meta:
 		model=Album

@@ -13,7 +13,7 @@ class Migration(SchemaMigration):
             ('title', self.gf('django.db.models.fields.CharField')(max_length=150)),
             ('albumUID', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
             ('description', self.gf('django.db.models.fields.CharField')(max_length=300, null=True, blank=True)),
-            ('awsS3Storage', self.gf('django.db.models.fields.URLField')(max_length=200)),
+            ('awsObjectName', self.gf('django.db.models.fields.CharField')(max_length=200)),
             ('timestamp', self.gf('django.db.models.fields.DateField')(auto_now_add=True, blank=True)),
         ))
         db.send_create_signal(u'Albums', ['Album'])
@@ -28,7 +28,7 @@ class Migration(SchemaMigration):
         u'Albums.album': {
             'Meta': {'object_name': 'Album'},
             'albumUID': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'awsS3Storage': ('django.db.models.fields.URLField', [], {'max_length': '200'}),
+            'awsObjectName': ('django.db.models.fields.CharField', [], {'max_length': '200'}),
             'description': ('django.db.models.fields.CharField', [], {'max_length': '300', 'null': 'True', 'blank': 'True'}),
             'timestamp': ('django.db.models.fields.DateField', [], {'auto_now_add': 'True', 'blank': 'True'}),
             'title': ('django.db.models.fields.CharField', [], {'max_length': '150'})
