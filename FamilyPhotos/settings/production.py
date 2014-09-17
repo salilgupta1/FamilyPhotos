@@ -13,18 +13,16 @@ MANAGERS = ADMINS
 import dj_database_url
 DATABASES['default'] = dj_database_url.config()
 
-'''
-RAVEN_CONFIG = {
-    'dsn': os.environ['SENTRY_DSN']
-}
-'''
 
 INSTALLED_APPS = INSTALLED_APPS + (
-#    'raven.contrib.django.raven_compat',
     'lockdown',
+    'storages',
 )
 
 
+STATICFILES_STORAGE = 'storages.backends.s3boto.S3BotoStorage'
 MIDDLEWARE_CLASSES += ('lockdown.middleware.LockdownMiddleware', )
 LOCKDOWN_PASSWORDS = (os.environ['STAGE_PASSWORD'],)
 LOCKDOWN_FORM = 'lockdown.forms.LockdownForm'
+
+STATIC_URL = 'http://%s.s3.amazonaws.com/' % os.environ.get('S3_STATICFILES_BUCKET')
