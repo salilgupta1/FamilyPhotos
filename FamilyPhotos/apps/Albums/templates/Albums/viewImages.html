@@ -9,32 +9,25 @@
 	<script src = "{%static "Albums/js/FileManager.js"%}"></script>
 	<script>
 		$(document).ready(function(){
-			$("#createAlbum").hide();
-			FileManager.init();
 			FileManager.setUpIsotope($("#imagePreview"));
 		});
 	</script>
 {%endblock%}
 {%block content%}
-	<div class='row col-md-10'>
-	{% if Success %}
-	<p>Success</p>
-	{%else%}
-		<form role='form' enctype="multipart/form-data" method='POST' action="{%url 'Albums:createAlbum' %}">
-			{% csrf_token %}
-			{% for field in form%}
-			<div class = 'form-group'>
-				<div>{{field.errors|striptags}}</div>
-	    		{{field.label_tag}}
-	    		{{field}}
-	    	</div>
-			{%endfor%}
-			<button type = 'submit' class = 'btn btn-primary' id='createAlbum'>Create Album</button>
-		</form>
-	</div>
+	{%block metadata%}{%endblock%}
 	<div id='imagePreview' class='row col-md-12'>
-
+		{% if previewPhotos %}
+			{%for img, albumUID in previewPhotos%}
+				<div>
+					<a href="{% url 'Albums:viewAlbum' albumUID %}"> <img class='photo' src= {{ img }} /></a>
+				</div>
+			{%endfor%}
+		{% else %}
+			{% for img in images %}
+				<div>
+					<img class='photo' src= {{ img }} />
+				</div>
+			{% endfor %}
+		{% endif %}
 	</div>
-
-{%endif%}
 {%endblock%}

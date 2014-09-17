@@ -17,7 +17,7 @@ var FileManager = (function($){
 				reader = new FileReader();
 				reader.onload = function(e){
 					var image = e.target.result;
-					$("#imagePreview").append("<img class='photo' src='"+image+"'/>");
+					$("#imagePreview").append("<div><img class='photo' src='"+image+"'/></div>");
 					$("#createAlbum").show();
 				};
 				reader.readAsDataURL(files[i]);
@@ -37,9 +37,9 @@ var FileManager = (function($){
 	init = function(){
 		setFileInputAttr();
 		previewImages();
-		setUpIsotope($("imagePreview"));
 	};
 	return {
 		init:init,
+		setUpIsotope:setUpIsotope
 	};
 }(jQuery));

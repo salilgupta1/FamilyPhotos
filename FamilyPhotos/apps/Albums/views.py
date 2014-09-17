@@ -2,9 +2,10 @@ from django.shortcuts import render
 from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
 from forms import CreateAlbumForm
+from models import *
 from uuid import uuid4
 from django.core.context_processors import csrf
-from libs.AWSapi import uploadToS3
+from libs.AWSapi import *
 # Create your views here.
 
 def home(request):
@@ -25,7 +26,15 @@ def createAlbum(request):
 		return render(request,"Albums/createAlbum.html",{"form":form})
 
 def viewAllAlbums(request):
-	pass
+	albums = Album.objects.all()
+	keys = [k.awsObjectName for k in albums]
+	albumUIDS = [k.albumUID for k in albums]
+	previewPhotos = zip(downloadPreviewsFromS3(keys),albumUIDS)
+	return render(request, "Albums/viewImages.html", {"previewPhotos":previewPhotos})
 
-def viewAlbum(request):
-	pass
+def viewAlbum(request,albumuid):
+	key = Album.objects.get(albumUID=albumuid).awsObjectName
+	images = downloadAlbumFromS3(key)
+	return render(request, "Albums/viewImages.html",{"images":images})
+
+	
