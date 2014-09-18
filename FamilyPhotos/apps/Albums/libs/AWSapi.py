@@ -34,7 +34,7 @@ def downloadPreviewsFromS3(keys):
 		for k in keys:
 			prevImg = list(bucket.list(k.encode("utf-8"),"/*.*"))[0]
 			imgName = prevImg.name.encode("utf-8").replace(" ","+")
-			url = "https://s3-us-west-2.amazonaws.com/%s/%s" % (os.environ.get("S3_PHOTOS_BUCKET"), imgName)
+			url = "https://%s.amazonaws.com/%s/%s" % (os.environ.get("AWS_REGION"), os.environ.get("S3_PHOTOS_BUCKET"), imgName)
 			urls.append(url)
 		end = time.time()
 		print end - start
@@ -51,7 +51,7 @@ def downloadAlbumFromS3(key):
 		images = iter(bucket.list(key.encode("utf-8"),"/*.*"))
 		for img in images:
 			imgName = img.name.encode("utf-8").replace(" ","+")
-			url = "https://s3-us-west-2.amazonaws.com/%s/%s" % (os.environ.get("S3_PHOTOS_BUCKET"), imgName)
+			url = "https://%s.amazonaws.com/%s/%s" % (os.environ.get("AWS_REGION"), os.environ.get("S3_PHOTOS_BUCKET"), imgName)
 			urls.append(url)
 		end = time.time()
 		print end - start

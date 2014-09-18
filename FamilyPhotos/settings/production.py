@@ -10,7 +10,7 @@ ADMINS = (
 
 MANAGERS = ADMINS
 
-S3_STATICFILES_BUCKET = os.environ.get("S3_STATICFILES_BUCKET")
+AWS_STORAGE_BUCKET_NAME = os.environ.get("AWS_STORAGE_BUCKET_NAME")
 
 RAYGUN_API_URL = os.environ.get("RAYGUN_API_URL")
 RAYGUN_API_KEY = os.environ.get("RAYGUN_API_KEY")
@@ -31,4 +31,4 @@ MIDDLEWARE_CLASSES += ('lockdown.middleware.LockdownMiddleware', 'raygun_dot_io.
 LOCKDOWN_PASSWORDS = (os.environ['STAGE_PASSWORD'],)
 LOCKDOWN_FORM = 'lockdown.forms.LockdownForm'
 
-STATIC_URL = 'http://%s.s3.amazonaws.com/' % S3_STATICFILES_BUCKET
+STATIC_URL = 'http://%s.s3.amazonaws.com/' % AWS_STORAGE_BUCKET_NAME
