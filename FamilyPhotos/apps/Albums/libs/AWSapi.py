@@ -49,7 +49,7 @@ def downloadAlbumFromS3(key):
 		urls = []
 		images = iter(bucket.list(key.encode("utf-8"),"/*.*"))
 		for img in images:
-			url = imgName.generate_url(expires_in=0,query_auth=False)
+			url = img.generate_url(expires_in=0,query_auth=False)
 			urls.append(url)
 		end = time.time()
 		print end - start
