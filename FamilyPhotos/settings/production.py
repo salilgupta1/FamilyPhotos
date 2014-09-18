@@ -12,6 +12,10 @@ MANAGERS = ADMINS
 
 S3_STATICFILES_BUCKET = os.environ.get("S3_STATICFILES_BUCKET")
 
+RAYGUN_API_URL = os.environ.get("RAYGUN_API_URL")
+RAYGUN_API_KEY = os.environ.get("RAYGUN_API_KEY")
+RAYGUN_API_ENABLED = True
+
 import dj_database_url
 DATABASES['default'] = dj_database_url.config()
 
