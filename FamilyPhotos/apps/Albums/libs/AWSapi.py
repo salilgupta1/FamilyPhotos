@@ -5,7 +5,7 @@ import time
 
 def connectToS3():
 	try:
-		conn = boto.connect_s3(os.environ.get("AWS_S3_ACCESS_KEY_ID"),os.environ.get("AWS_S3_SECRET_ACCESS_KEY"))
+		conn = boto.connect_s3()
 		return conn
 	except:
 		print sys.exc_info()
