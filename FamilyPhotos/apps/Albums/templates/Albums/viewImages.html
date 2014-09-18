@@ -14,7 +14,14 @@
 	</script>
 {%endblock%}
 {%block content%}
-	{%block metadata%}{%endblock%}
+	{%block metadata%}
+		{% if metadata %}
+			<div>
+				<h3> {{metadata.title}}</h3>
+				<p><h6> {{metadata.description}} </h6></p>
+			</div>
+		{%endif%}
+	{%endblock%}
 	<div id='imagePreview' class='row col-md-12'>
 		{% if previewPhotos %}
 			{%for img, albumUID in previewPhotos%}
@@ -22,12 +29,16 @@
 					<a href="{% url 'Albums:viewAlbum' albumUID %}"> <img class='photo' src= {{ img }} /></a>
 				</div>
 			{%endfor%}
-		{% else %}
+		{%elif images%}
 			{% for img in images %}
 				<div>
 					<img class='photo' src= {{ img }} />
 				</div>
 			{% endfor %}
+		{% elif empty %}
+			<div>
+				<h2>{{ empty }}</h2>
+			</div>
 		{% endif %}
 	</div>
 {%endblock%}
