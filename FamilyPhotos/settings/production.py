@@ -23,7 +23,7 @@ INSTALLED_APPS = INSTALLED_APPS + (
 
 
 STATICFILES_STORAGE = 'storages.backends.s3boto.S3BotoStorage'
-MIDDLEWARE_CLASSES += ('lockdown.middleware.LockdownMiddleware', )
+MIDDLEWARE_CLASSES += ('lockdown.middleware.LockdownMiddleware', 'raygun_dot_io.middleware.RaygunDotIOMiddleware')
 LOCKDOWN_PASSWORDS = (os.environ['STAGE_PASSWORD'],)
 LOCKDOWN_FORM = 'lockdown.forms.LockdownForm'
 
