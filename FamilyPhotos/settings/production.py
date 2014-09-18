@@ -10,6 +10,8 @@ ADMINS = (
 
 MANAGERS = ADMINS
 
+S3_STATICFILES_BUCKET = os.environ.get("S3_STATICFILES_BUCKET")
+
 import dj_database_url
 DATABASES['default'] = dj_database_url.config()
 
@@ -25,4 +27,4 @@ MIDDLEWARE_CLASSES += ('lockdown.middleware.LockdownMiddleware', )
 LOCKDOWN_PASSWORDS = (os.environ['STAGE_PASSWORD'],)
 LOCKDOWN_FORM = 'lockdown.forms.LockdownForm'
 
-STATIC_URL = 'http://%s.s3.amazonaws.com/' % os.environ.get('S3_STATICFILES_BUCKET')
+STATIC_URL = 'http://%s.s3.amazonaws.com/' % S3_STATICFILES_BUCKET
