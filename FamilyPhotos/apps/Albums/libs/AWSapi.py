@@ -5,10 +5,10 @@ import time
 
 def connectToS3():
 	try:
-		conn = boto.connect_s3(os.environ.get("AWS_ACCESS_KEY"),os.environ.get("AWS_SECRET_KEY"))
+		conn = boto.connect_s3(os.environ.get("AWS_S3_ACCESS_KEY_ID"),os.environ.get("AWS_S3_SECRET_ACCESS_KEY"))
 		return conn
 	except:
-		print sys.exc_info()[0]
+		print sys.exc_info()
 
 def uploadToS3(files, object_name):
 	start = time.time()
