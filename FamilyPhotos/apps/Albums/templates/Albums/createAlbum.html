@@ -9,17 +9,15 @@
 	<script src = "{%static "Albums/js/FileManager.js"%}"></script>
 	<script>
 		$(document).ready(function(){
-			$("#createAlbum").hide();
 			FileManager.init();
 			FileManager.setUpIsotope($("#imagePreview"));
+			FileManager.createAlbum();
 		});
 	</script>
 {%endblock%}
 {%block content%}
-	<div class='row col-md-10'>
-	{% if Success %}
-	<p>Success</p>
-	{%else%}
+	<div id='createAlbumForm' class='row col-md-10'>
+	{%if form%}
 		<form role='form' enctype="multipart/form-data" method='POST' action="{%url 'Albums:createAlbum' %}">
 			{% csrf_token %}
 			{% for field in form%}
