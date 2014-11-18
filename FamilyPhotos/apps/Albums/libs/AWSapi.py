@@ -15,15 +15,22 @@ def uploadToS3(files, object_name):
 	conn = connectToS3()
 	try:
 		bucket = conn.get_bucket(os.environ.get("S3_PHOTOS_BUCKET"))
+		print bucket
 		for image in files.getlist('photos'):
 			k = Key(bucket)
+			print k
+			print image.name
 			k.key = "%s/%s" % (object_name,image.name)
+			print k.key
 			k.set_contents_from_file(image)
-			k.set_acl("public_read")
+			print "Set content"
+			k.set_acl("public-read")
+			print "Read"
 		end = time.time()
+		return True
 	except:
 		print sys.exc_info()
-	print (end - start)
+		return False
 
 def downloadPreviewsFromS3(keys):
 	start = time.time()
@@ -31,6 +38,7 @@ def downloadPreviewsFromS3(keys):
 	try:
 		bucket = conn.get_bucket(os.environ.get("S3_PHOTOS_BUCKET"))
 		urls = []
+		print keys
 		for k in keys:
 			prevImg = list(bucket.list(k.encode("utf-8"),"/*.*"))[0]
 			url = prevImg.generate_url(expires_in=0, query_auth=False)
@@ -40,6 +48,7 @@ def downloadPreviewsFromS3(keys):
 		return urls
 	except:
 		print sys.exc_info()
+		return []
 
 def downloadAlbumFromS3(key):
 	start = time.time()
@@ -56,4 +65,5 @@ def downloadAlbumFromS3(key):
 		return urls
 	except:
 		print sys.exc_info()
+		return []
 	
