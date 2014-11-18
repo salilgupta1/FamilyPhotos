@@ -19,6 +19,8 @@
 	<div class='row col-md-10'>
 	{% if Success %}
 		<div><h2>{{ Success }}</h2></div>
+	{% elif Error%}
+		<div><h2>{{ Error }}</h2></div>
 	{%else%}
 		<form role='form' enctype="multipart/form-data" method='POST' action="{%url 'Albums:createAlbum' %}">
 			{% csrf_token %}
