@@ -11,12 +11,14 @@
 
 {%block content%}
 	{%block metadata%}
+		<div class='row col-md-12' id='metadata'>
 		{% if metadata %}
-			<div class='row col-md-12' id='metadata'>
-				<h2> Title: {{metadata.title}}</h2>
-				<p><h3> Description: {{metadata.description}} </h3></p>
-			</div>
+			<h2> Title: {{metadata.title}}</h2>
+			<p><h3> Description: {{metadata.description}} </h3></p>
+		{%else%}
+			<h2> Our Albums </h2>
 		{%endif%}
+		</div>
 	{%endblock%}
 	<div id='imagePreview' class='row col-md-12'>
 		{% if previewPhotos %}
