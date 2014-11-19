@@ -4,6 +4,12 @@ var FileManager = (function($){
 		$("#id_photos").attr("multiple",true);
 		$("#id_photos").attr("accept","image/*");
 	},
+	onsubmit = function(){
+		$("form").submit(function(e){
+			$("#loadingGif").show();
+			$("ul.rig").empty();
+		});
+	},
 	previewImages = function(){
 		// set up the images for preview before uploading
 		$("#id_photos").change(function(event){
@@ -44,6 +50,7 @@ var FileManager = (function($){
 	init = function(){
 		setFileInputAttr();
 		previewImages();
+		onsubmit();
 	};
 	return {
 		init:init

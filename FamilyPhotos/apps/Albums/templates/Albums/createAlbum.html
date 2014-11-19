@@ -8,6 +8,7 @@
 	<script>
 		$(document).ready(function(){
 			$("#createAlbum").hide();
+			$("#loadingGif").hide();
 			FileManager.init();
 		});
 	</script>
@@ -38,8 +39,10 @@
 						<button type = 'submit' class = 'btn btn-primary' id='createAlbum'>Create Album</button>
 					</form>
 				<div id='imagePreview' class='row col-md-12'>
+					<center>
+						<img id='loadingGif' src='{%static 'img/loading.gif'%}'/>
+					</center>
 					<ul class='rig columns-4'>
-
 					</ul>
 				</div>
 			</div>
