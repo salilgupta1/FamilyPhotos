@@ -7,31 +7,38 @@ var FileManager = (function($){
 	previewImages = function(){
 		// set up the images for preview before uploading
 		$("#id_photos").change(function(event){
-			$("#imagePreview").empty();
-			// add loading gif here
+			// empty out div that held old images
+			$("ul.rig").empty();
+			$("#imagePreview").css("background-color","gray");
+			$("#imagePreview").css("opacity","0.1");
+			// get file input
 			var input = $(event.currentTarget);
 			var files = input[0].files;
-			var reader;
-			for(var i = 0;i<files.length;i++)
-			{
-				reader = new FileReader();
+			var reader = new FileReader();
+
+			function readFile(index){
+				// use recursions to read one file at a time
+
+				var file = files[index];
 				reader.onload = function(e){
 					var image = e.target.result;
-					$("#imagePreview").append("<div><img class='photo' src='"+image+"'/></div>");
-					$("#createAlbum").show();
-				};
-				reader.readAsDataURL(files[i]);
+					$("ul.rig").append("<li><img  src='"+image+"'/></li>");
+					
+					// recur
+					if(index+1 < files.length){
+						readFile(index+1);
+					}
+					else{
+						// base case
+						$("#imagePreview").css("background-color","");
+						$("#imagePreview").css("opacity","");
+						return;
+					}
+				}
+				reader.readAsDataURL(file);
 			}
-		});
-	},
-	setUpIsotope = function(container){
-		// set up Isotope
-		container.isotope({
-			itemSelector:'.photo',
-			layoutMode:'cellsByRow',
-			cellsByRow: {
-				columnWidth: 150,
-			}
+			readFile(0);	
+			$("#createAlbum").show();
 		});
 	},
 	init = function(){
@@ -39,7 +46,6 @@ var FileManager = (function($){
 		previewImages();
 	};
 	return {
-		init:init,
-		setUpIsotope:setUpIsotope
+		init:init
 	};
 }(jQuery));
