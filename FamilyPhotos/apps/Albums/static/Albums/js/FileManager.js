@@ -1,53 +1,58 @@
 var FileManager = (function($){
-	var $imageContainer = $("#imagePreview"),
-	setFileInputAttr = function(){
+	var setFileInputAttr = function(){
 		// accept multiple file upload
 		$("#id_photos").attr("multiple",true);
 		$("#id_photos").attr("accept","image/*");
 	},
+	onsubmit = function(){
+		$("form").submit(function(e){
+			$("#loadingGif").show();
+			$("ul.rig").empty();
+		});
+	},
 	previewImages = function(){
 		// set up the images for preview before uploading
 		$("#id_photos").change(function(event){
-			$imageContainer.empty();
+			// empty out div that held old images
+			$("ul.rig").empty();
+			$("#imagePreview").css("background-color","gray");
+			$("#imagePreview").css("opacity","0.1");
+			// get file input
 			var input = $(event.currentTarget);
 			var files = input[0].files;
-			var reader;
-			for(var i = 0;i<files.length;i++){
-				reader = new FileReader();
+			var reader = new FileReader();
+
+			function readFile(index){
+				// use recursions to read one file at a time
+
+				var file = files[index];
 				reader.onload = function(e){
 					var image = e.target.result;
-					$imageContainer.append("<div><img class='photo' src='"+image+"'/></div>");
-				};
-				reader.readAsDataURL(files[i]);
+					$("ul.rig").append("<li><img  src='"+image+"'/></li>");
+					
+					// recur
+					if(index+1 < files.length){
+						readFile(index+1);
+					}
+					else{
+						// base case
+						$("#imagePreview").css("background-color","");
+						$("#imagePreview").css("opacity","");
+						return;
+					}
+				}
+				reader.readAsDataURL(file);
 			}
-		});
-	},
-	createAlbum = function(){
-		$("createAlbum").click(function(e){
-			$("#createAlbumForm").hide();
-			$imageContainer.empty();
-			$imageContainer.append("<img src='{% static 'img/loading.gif' %}'/>");
-			e.preventDefault();
-			e.unbind();
-		});
-	},
-	setUpIsotope = function(container){
-		// set up Isotope
-		container.isotope({
-			itemSelector:'.photo',
-			layoutMode:'cellsByRow',
-			cellsByRow: {
-				columnWidth: 150,
-			}
+			readFile(0);	
+			$("#createAlbum").show();
 		});
 	},
 	init = function(){
 		setFileInputAttr();
 		previewImages();
+		onsubmit();
 	};
 	return {
-		init:init,
-		setUpIsotope:setUpIsotope,
-		createAlbum:createAlbum,
+		init:init
 	};
 }(jQuery));

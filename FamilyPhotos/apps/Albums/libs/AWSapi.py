@@ -15,15 +15,17 @@ def uploadToS3(files, object_name):
 	conn = connectToS3()
 	try:
 		bucket = conn.get_bucket(os.environ.get("S3_PHOTOS_BUCKET"))
+		print bucket
 		for image in files.getlist('photos'):
 			k = Key(bucket)
 			k.key = "%s/%s" % (object_name,image.name)
 			k.set_contents_from_file(image)
-			k.set_acl("public_read")
+			k.set_acl("public-read")
 		end = time.time()
+		return True
 	except:
 		print sys.exc_info()
-	print (end - start)
+		return False
 
 def downloadPreviewsFromS3(keys):
 	start = time.time()
@@ -31,16 +33,16 @@ def downloadPreviewsFromS3(keys):
 	try:
 		bucket = conn.get_bucket(os.environ.get("S3_PHOTOS_BUCKET"))
 		urls = []
+		print keys
 		for k in keys:
 			prevImg = list(bucket.list(k.encode("utf-8"),"/*.*"))[0]
-			imgName = prevImg.name.encode("utf-8").replace(" ","+")
-			url = "https://%s.amazonaws.com/%s/%s" % (os.environ.get("AWS_REGION"), os.environ.get("S3_PHOTOS_BUCKET"), imgName)
+			url = prevImg.generate_url(expires_in=0, query_auth=False)
 			urls.append(url)
 		end = time.time()
-		print end - start
 		return urls
 	except:
 		print sys.exc_info()
+		return []
 
 def downloadAlbumFromS3(key):
 	start = time.time()
@@ -50,12 +52,11 @@ def downloadAlbumFromS3(key):
 		urls = []
 		images = iter(bucket.list(key.encode("utf-8"),"/*.*"))
 		for img in images:
-			imgName = img.name.encode("utf-8").replace(" ","+")
-			url = "https://%s.amazonaws.com/%s/%s" % (os.environ.get("AWS_REGION"), os.environ.get("S3_PHOTOS_BUCKET"), imgName)
+			url = img.generate_url(expires_in=0,query_auth=False)
 			urls.append(url)
 		end = time.time()
-		print end - start
 		return urls
 	except:
 		print sys.exc_info()
+		return []
 	
