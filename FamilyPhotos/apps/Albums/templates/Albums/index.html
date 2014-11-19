@@ -1,13 +1,22 @@
 {%extends 'Albums/base.html'%}
 {%block content%}
-	<center>
-		<div>
-			<button>
-				<a href="{%url 'Albums:createAlbum' %}">Create Album</a>
-			</button>
-			<button>
-				<a href="{%url 'Albums:viewAllAlbums' %}">View Albums</a>
-			</button>
+	<div class='row col-md-12'>
+		<div class='col-md-2'></div>
+		<div class='col-md-8'>
+			<center>
+			<div class='row col-md-12'>
+				<h1>Gupta Family Photo Albums</h1>
+			</div>
+			<div class='row col-md-12'>
+				<button class="button-xlarge pure-button">
+					<a href="{%url 'Albums:createAlbum' %}">Create Album</a>
+				</button>
+				<button class="button-xlarge pure-button">
+					<a href="{%url 'Albums:viewAllAlbums' %}">View Albums</a>
+				</button>
+			</div>
+			</center>
 		</div>
-	</center>
+		<div class='col-md-2'></div>
+	</div>
 {%endblock%}

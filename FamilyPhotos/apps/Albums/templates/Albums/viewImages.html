@@ -1,40 +1,42 @@
 {%extends 'Albums/base.html' %}
 {%load staticfiles%}
 {%block cssFiles%}
-<link rel='stylesheet' type='text/css' href ="{%static "Albums/css/Albums.css"%}"/>
+	<link rel='stylesheet' type='text/css' href ="{%static "Albums/css/Albums.css"%}"/>
 {%endblock%}
-{%block scripts%}
-	<script src="{%static "js/isotope.pkgd.min.js"%}"></script>
-	<script src="{%static "js/cells-by-row.js"%}"></script>
-	<script src = "{%static "Albums/js/FileManager.js"%}"></script>
-	<script>
-		$(document).ready(function(){
-			FileManager.setUpIsotope($("#imagePreview"));
-		});
-	</script>
+
+{%block header%}
+	<button class="button-header pure-button" ><a href='{%url 'Albums:viewAllAlbums' %}'>View Albums</a></button>
+	<button class="button-header pure-button" ><a href='/'>Home</a></button>
 {%endblock%}
+
 {%block content%}
 	{%block metadata%}
 		{% if metadata %}
-			<div>
-				<h3> {{metadata.title}}</h3>
-				<p><h6> {{metadata.description}} </h6></p>
+			<div class='row col-md-12' id='metadata'>
+				<h2> Title: {{metadata.title}}</h2>
+				<p><h3> Description: {{metadata.description}} </h3></p>
 			</div>
 		{%endif%}
 	{%endblock%}
 	<div id='imagePreview' class='row col-md-12'>
 		{% if previewPhotos %}
-			{%for img, albumUID in previewPhotos%}
-				<div>
-					<a href="{% url 'Albums:viewAlbum' albumUID %}"> <img class='photo' src= {{ img }} /></a>
-				</div>
-			{%endfor%}
+			<ul class='rig columns-4'>
+				{%for img, albumUID, title, desc in previewPhotos%}
+					<li>
+						<a href="{% url 'Albums:viewAlbum' albumUID %}"> <img src= {{ img }} /></a>
+						<h3> {{title}} </h3>
+						<p>  {{desc}} </p>
+					</li>
+				{%endfor%}
+			</ul>
 		{%elif images%}
-			{% for img in images %}
-				<div>
-					<img class='photo' src= {{ img }} />
-				</div>
-			{% endfor %}
+			<ul class='rig columns-4'>
+				{% for img in images %}
+					<li>
+						<img  src= {{ img }} />
+					</li>
+				{% endfor %}
+			</ul>
 		{% elif empty %}
 			<div>
 				<h2>{{ empty }}</h2>

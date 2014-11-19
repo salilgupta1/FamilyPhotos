@@ -4,39 +4,47 @@
 <link rel='stylesheet' type='text/css' href ="{%static "Albums/css/Albums.css"%}"/>
 {%endblock%}
 {%block scripts%}
-	<script src="{%static "js/isotope.pkgd.min.js"%}"></script>
-	<script src="{%static "js/cells-by-row.js"%}"></script>
 	<script src = "{%static "Albums/js/FileManager.js"%}"></script>
 	<script>
 		$(document).ready(function(){
 			$("#createAlbum").hide();
 			FileManager.init();
-			FileManager.setUpIsotope($("#imagePreview"));
 		});
 	</script>
 {%endblock%}
+{%block header%}
+	<button class="button-header pure-button" ><a href='{%url 'Albums:viewAllAlbums' %}'>View Albums</a></button>
+	<button class="button-header pure-button" ><a href='/'>Home</a></button>
+{%endblock%}
 {%block content%}
-	<div class='row col-md-10'>
-	{% if Success %}
-		<div><h2>{{ Success }}</h2></div>
-	{% elif Error%}
-		<div><h2>{{ Error }}</h2></div>
-	{%else%}
-		<form role='form' enctype="multipart/form-data" method='POST' action="{%url 'Albums:createAlbum' %}">
-			{% csrf_token %}
-			{% for field in form%}
-			<div class = 'form-group'>
-				<div>{{field.errors|striptags}}</div>
-	    		{{field.label_tag}}
-	    		{{field}}
-	    	</div>
-			{%endfor%}
-			<button type = 'submit' class = 'btn btn-primary' id='createAlbum'>Create Album</button>
-		</form>
-	</div>
-	<div id='imagePreview' class='row col-md-12'>
+		<div class='row col-md-12'>
+			<div class='col-md-2'></div>
+			<div class='col-md-8'>
+				{% if Success %}
+					<div><h2>{{ Success }}</h2></div>
+				{% elif Error%}
+					<div><h2>{{ Error }}</h2></div>
+				{%else%}
+					<h2>Create a new Album</h2>
+					<form role='form' enctype="multipart/form-data" method='POST' action="{%url 'Albums:createAlbum' %}">
+						{% csrf_token %}
+						{% for field in form%}
+						<div class = 'form-group'>
+							<div>{{field.errors|striptags}}</div>
+				    		{{field.label_tag}}
+				    		{{field}}
+				    	</div>
+						{%endfor%}
+						<button type = 'submit' class = 'btn btn-primary' id='createAlbum'>Create Album</button>
+					</form>
+				<div id='imagePreview' class='row col-md-12'>
+					<ul class='rig columns-4'>
 
-	</div>
+					</ul>
+				</div>
+			</div>
+			<div class='col-md-2'></div>
+		</div>
 
 {%endif%}
 {%endblock%}
