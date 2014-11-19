@@ -33,9 +33,11 @@ def viewAllAlbums(request):
 	if albums:
 		keys = [k.awsObjectName for k in albums]
 		albumUIDS = [k.albumUID for k in albums]
+		titles = [k.title for k in albums]
+		descriptions = [k.description for k in albums]
 		urls = downloadPreviewsFromS3(keys)
 		if len(urls):
-			previewPhotos = zip(downloadPreviewsFromS3(keys),albumUIDS)
+			previewPhotos = zip(urls,albumUIDS,titles,descriptions)
 			return render(request, "Albums/viewImages.html", {"previewPhotos":previewPhotos})	
 	return render(request, "Albums/viewImages.html",{"empty":"Dad you haven't added any albums yet!"})
 
