@@ -18,14 +18,9 @@ def uploadToS3(files, object_name):
 		print bucket
 		for image in files.getlist('photos'):
 			k = Key(bucket)
-			print k
-			print image.name
 			k.key = "%s/%s" % (object_name,image.name)
-			print k.key
 			k.set_contents_from_file(image)
-			print "Set content"
 			k.set_acl("public-read")
-			print "Read"
 		end = time.time()
 		return True
 	except:
@@ -44,7 +39,6 @@ def downloadPreviewsFromS3(keys):
 			url = prevImg.generate_url(expires_in=0, query_auth=False)
 			urls.append(url)
 		end = time.time()
-		print end - start
 		return urls
 	except:
 		print sys.exc_info()
@@ -61,7 +55,6 @@ def downloadAlbumFromS3(key):
 			url = img.generate_url(expires_in=0,query_auth=False)
 			urls.append(url)
 		end = time.time()
-		print end - start
 		return urls
 	except:
 		print sys.exc_info()
