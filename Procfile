@@ -1,1 +1,1 @@
-web: gunicorn FamilyPhotos.wsgi
+web: gunicorn FamilyPhotos.wsgi --workers=2
