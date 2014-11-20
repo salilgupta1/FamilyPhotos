@@ -41,6 +41,10 @@
 			<div>
 				<h2>{{ empty }}</h2>
 			</div>
+		{% elif error%}
+			<div>
+				<h2>{{ error }}</h2>
+			</div>
 		{% endif %}
 	</div>
 {%endblock%}
