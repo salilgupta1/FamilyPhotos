@@ -29,15 +29,29 @@ def createAlbum(request):
 	return render(request,"Albums/createAlbum.html",{"form":form})
 
 def viewAllAlbums(request):
+	# get all album data in db
 	albums = Album.objects.all()
 	if albums:
+		# pull all keys
 		keys = [k.awsObjectName for k in albums]
-		albumUIDS = [k.albumUID for k in albums]
-		titles = [k.title for k in albums]
-		descriptions = [k.description for k in albums]
-		urls = downloadPreviewsFromS3(keys)
-		if len(urls):
+
+		# return urls with keys that are in S3
+		urlsWithKeys = downloadPreviewsFromS3(keys)
+
+		if len(urlsWithKeys):
+			titles = []
+			descriptions = []
+			albumUIDS = []
+			urls = []
+			# go through the keys that have urls and get metadata
+			for url, key in urlsWithKeys:
+				album = albums.get(awsObjectName=key)
+				titles.append(album.title)
+				descriptions.append(album.description)
+				albumUIDS.append(album.albumUID)
+				urls.append(url)
 			previewPhotos = zip(urls,albumUIDS,titles,descriptions)
+
 			return render(request, "Albums/viewImages.html", {"previewPhotos":previewPhotos})	
 	return render(request, "Albums/viewImages.html",{"empty":"Dad you haven't added any albums yet!"})
 
@@ -46,6 +60,6 @@ def viewAlbum(request,albumuid):
 	key = album.awsObjectName
 	metadata = {"title":album.title, "description":album.description}
 	images = downloadAlbumFromS3(key)
-	return render(request, "Albums/viewImages.html",{"images":images,"metadata":metadata})
-
-	
+	if len(images):
+		return render(request, "Albums/viewImages.html",{"images":images,"metadata":metadata})
+	return render(request, "Albums/viewImages.html",{"error":"Something went terribly wrong..."})
